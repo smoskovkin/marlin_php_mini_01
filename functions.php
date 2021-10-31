@@ -6,7 +6,7 @@ function db_query($sql_query)
     $host = 'localhost';
     $user = 'root';
     $pass = '';
-    $name = 'merlin-mini';
+    $name = 'marlin-mini';
 
     $link = mysqli_connect($host, $user, $pass, $name);
     mysqli_query($link, "SET NAMES 'utf8'");
@@ -51,21 +51,48 @@ function redirect_to($path)
 
 function login($email, $password)
 {
-    $sql_query = "SELECT id, email, password FROM users WHERE (email = '$email') AND (password = '$password')";
+    $sql_query = "SELECT * FROM users WHERE (email = '$email') AND (password = '$password')";
     $result    = db_query($sql_query);
     $row       = mysqli_fetch_assoc($result);
 
     if ( ! ($email == $row['email'] && $password == $row['password'])) {
         return false;
-    }g
+    }
 
-    $_SESSION['user']['id'] = $row['id'];
-    $_SESSION['user']['email'] = $row['email'];
+    $_SESSION['user']['id']       = $row['id'];
+    $_SESSION['user']['email']    = $row['email'];
     $_SESSION['user']['password'] = $row['password'];
-    // тут вот вопрос  - лучше сразу все данные подгружать или нет?
-    // ведь пользователь может просто захотеть посмотреть других пользователей (телефон или емейл) и выйти
-    // а если соберется делать какие-то другие действия, то создать уже другой запрос
+    $_SESSION['user']['username'] = $row['username'];
+    $_SESSION['user']['role']     = $row['role'];
 
     return true;
 }
 
+
+function is_logged($user)
+{
+    if ( ! isset($user)) {
+        return false;
+    }
+
+    return true;
+}
+
+
+function is_admin($user)
+{
+    if ( ! ($user['role'] == 'admin')) {
+        return false;
+    }
+
+    return true;
+}
+
+
+function get_all_users()
+{
+    $sql_query = "SELECT * FROM users";
+    $result    = db_query($sql_query);
+
+    return $result;
+}
