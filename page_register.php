@@ -64,7 +64,7 @@
 
 	                                <?php if (isset($_SESSION['error'])) : ?>
 	                                    <div class="alert alert-danger text-dark" role="alert">
-	                                        <strong>Уведомление!</strong> <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+	                                        <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
 	                                    </div>
 	                                <?php endif ?>
 

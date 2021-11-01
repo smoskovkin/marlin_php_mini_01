@@ -11,7 +11,7 @@ $user = $_SESSION['user'];
 $user_logged = is_logged($user);
 
 if ( ! ($user_logged)) {
-    set_flash_message('error', 'Вы не авторизованы');
+    set_flash_message('error', '<strong>Уведомление!</strong> Этот эл. адрес уже занят другим пользователем');
     redirect_to('page_login.php');
 }
 

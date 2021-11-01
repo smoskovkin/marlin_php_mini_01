@@ -39,10 +39,12 @@
             <h1 class="subheader-title">
                 <i class='subheader-icon fal fa-plus-circle'></i> Добавить пользователя
             </h1>
-
-
-
         </div>
+	    <?php if(isset($_SESSION['error'])) : ?>
+	    <div class="ml-auto mr-auto alert alert-danger text-dark" role="alert">
+            <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+	    </div>
+	    <?php endif ?>
         <form action="create_user_handler.php" method="POST">
             <div class="row">
                 <div class="col-xl-6">

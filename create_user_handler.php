@@ -8,7 +8,7 @@ include 'functions.php';
 $email    = $_POST['email'];
 $password = $_POST['password'];
 $status   = $_POST['status'];
-$avatar   = $_POST['avatar'];
+//$avatar   = $_POST['avatar'];
 
 
 $user = $_SESSION['user'];
@@ -23,8 +23,11 @@ if ( ! ($user_logged and $user_admin)) {
 
 $new_user = get_user_by_email($email);
 
-if (!($new_user)) {
-    add_user($email, $password);
+if ($new_user) {
+    set_flash_message('error', '<strong>Уведомление!</strong> Этот эл. адрес уже занят другим пользователем');
+    redirect_to('create_user.php');
 }
 
-//ну а дальше мелочи
+add_user($email, $password);
+
+redirect_to('create_user.php');
